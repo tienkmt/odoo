@@ -1,0 +1,27 @@
+<odoo>
+    <record id="multi_upload_image_view" model="ir.ui.view">
+        <field name="name">multi.upload.image.view</field>
+        <field name="model">hrm.multi.image</field>
+        <field name="arch" type="xml">
+            <form string="Upload hình ảnh">
+                <group>
+                    <field name="document_declaration" invisible="1"/>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                </group>
+                <footer>
+                    <button name="action_save_images" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="open_multiple_upload" model="ir.actions.act_window">
+        <field name="name">Upload Images</field>
+        <field name="res_model">hrm.multi.image</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="multi_upload_image_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

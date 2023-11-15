@@ -1,0 +1,62 @@
+<odoo>
+    <record id="view_image_form" model="ir.ui.view">
+        <field name="name">hrm.image.form</field>
+        <field name="model">hrm.image</field>
+        <field name="arch" type="xml">
+            <form string="Hình ảnh">
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <label for="name" string="Tên hình ảnh"/>
+                        <h2>
+                            <field name="name" placeholder="Tên hình ảnh"/>
+                        </h2>
+                        <button name="open_image" type="object" class="oe_highlight">Xem ảnh</button>
+                        <br/>
+                    </div>
+                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                        <div class="row">
+                            <div class="col">
+                                <field name="image" widget="image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_image_kanban" model="ir.ui.view">
+        <field name="name">hrm.image.form</field>
+        <field name="model">hrm.image</field>
+        <field name="arch" type="xml">
+            <kanban string="Product Images" default_order="sequence">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image"/>
+                <field name="sequence" widget="handle"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="card oe_kanban_global_click p-0">
+                            <div class="o_squared_image">
+                                <img class="card-img-top"
+                                     t-att-src="kanban_image('hrm.image', 'image', record.id.raw_value)"
+                                     t-att-alt="record.name.value"/>
+                            </div>
+                            <div class="card-body p-0">
+                                <h4 class="card-title p-2 m-0 bg-200">
+                                    <small>
+                                        <field name="name"/>
+                                    </small>
+                                    <a type="button">
+                                        <button name="open_image" type="object" class="oe_highlight">
+                                            <i class="fa fa-picture-o" title="Link"></i>
+                                        </button>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

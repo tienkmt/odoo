@@ -1,0 +1,189 @@
+<odoo>
+    <data>
+        <record id="view_employee_profile_form" model="ir.ui.view">
+            <field name="name">hrm.employee.profile.form</field>
+            <field name="model">hrm.employee.profile</field>
+            <field name="arch" type="xml">
+                <form string="Tạo mới hồ sơ" create="false" edit="true">
+                    <field name="id" invisible="1"/>
+                    <field name="create_uid" invisible="1"/>
+                    <field name="can_see_button_reset_lock" invisible="1"/>
+                    <header attrs="{'invisible': [('id', '=', False)]}">
+                        <button name="action_send" string="Gửi duyệt" type="object" class="btn-primary"/>
+                        <button name="action_cancel" string="Hủy" type="object"/>
+                        <button name="reset_password" string="Đặt lại mật khẩu" type="object" class="btn-info"/>
+                        <button name="%(action_lock_personnel_account_popup)d" type="action" string="Khóa TK nhân sự"
+                                class="btn-red"
+                                attrs="{'invisible': ['|', ('account_link', '=', False), ('status_account', '=', False)]}">
+                        </button>
+                        <button name="%(reason_reopening_account_action)d" type="action"
+                                string="Mở lại tài khoản nhân sự"
+                                class="btn-red">
+                        </button>
+                        <button name="action_cancel_reopen_account" string="Hủy" type="object"
+                                class="btn-secondary"
+                                attrs="{'invisible': [('cancelled_reopen_account', '=', True)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="acc_id" invisible="1"/>
+                                <field name="employee_code_new" readonly="1" force_save="1"/>
+                                <field name="name"/>
+                                <field name="phone_num"/>
+                                <field name="email" modifiers="{'readonly': false, 'required': true}"/>
+                                <field name="identifier"/>
+                                <field name="work_start_date"/>
+                                <field name="date_receipt"/>
+                                <field name="profile_status" readonly="1"/>
+                                <field name="cancelled_reopen_account" invisible="1"/>
+                            </group>
+                            <group>
+                                <!--related = true là đã chọn văn phòng-->
+                                <field name="related" invisible="1"/>
+                                <field name="check_blocks" invisible="1"/>
+                                <field name="check_company" invisible="1"/>
+                                <field name="require_team_marketing" invisible="1"/>
+                                <field name="require_team_sale" invisible="1"/>
+                                <field name="block_id"/>
+                                <field name="system_id"
+                                       attrs="{'invisible': [('related', '=', True)], 'required': [('related', '=', False)],
+                                       'readonly': [('check_company', '!=', 'hrm.companies()')]}"
+                                       force_save="1"/>
+                                <field name="company"
+                                       attrs="{'invisible': [('related', '=', True)], 'required': [('related', '=', False)], }"/>
+                                <field name="department_id"
+                                       attrs="{'invisible': [('related', '=', False)], 'required': [('related', '=', True)]}"/>
+                                <field name="position_id"/>
+                                <field name="team_marketing"
+                                       attrs="{'invisible': [('related', '=', True)], 'required': [('require_team_marketing','=',True)]}"/>
+                                <field name="team_sales"
+                                       attrs="{'invisible': [('related', '=', True)], 'required': [('require_team_sale','=',True)]}"/>
+                                <field name="manager_id"
+                                       attrs="{'readonly': [('department_id', '!=', False)], 'invisible': [('related', '=', False)]}"
+                                       force_save="1"/>
+                                <field name="rank_id"
+                                       attrs="{'invisible': [('related', '=', False)], 'required': [('related', '=', True)]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="auto_create_acc"/>
+                        </group>
+                        <notebook attrs="{'invisible': [('id', '=', False)]}">
+                            <page string="Danh sách tài liệu">
+                                <field name="document_config" readonly="1" force_save="1"/>
+                                <field name="document_list" readonly="1" oder="sequence" force_save="1">
+                                    <tree class="hrm_custom_tree_notebook">
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="obligatory"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Khai báo tài liệu">
+                                <field name="document_declaration">
+                                    <tree class="hrm_custom_tree_notebook">
+                                        <field name="name"/>
+                                        <field name="complete"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Trạng thái phê duyệt" attrs="{'invisible': [('approved_name', '=', False)]}">
+                                <field name="approved_name" readonly="1"/>
+                                <field name="approved_link" readonly="1">
+                                    <tree default_order="step ASC" class="hrm_custom_tree_notebook">
+                                        <field name="step"/>
+                                        <field name="approve"/>
+                                        <field name="obligatory"/>
+                                        <field name="excess_level"/>
+                                        <field name="approve_status"/>
+                                        <field name="time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Mở lại tài khoản">
+                                <field name="reopen_approval_flow_name" readonly="1"/>
+                                <field name="reopen_approval_flow_link" readonly="1">
+                                    <tree default_order="step ASC" class="hrm_custom_tree_notebook">
+                                        <field name="step"/>
+                                        <field name="approval_person"/>
+                                        <field name="imperative"/>
+                                        <field name="pass_level"/>
+                                        <field name="approve_status"/>
+                                        <field name="time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Thiết lập nhân sự">
+                                <group>
+                                    <group>
+                                        <field name="account_link"/>
+                                        <field name="status_account" widget="boolean_toggle"
+                                               attrs="{'invisible': [('account_link', '=', False)]}"/>
+                                        <field name="account_link_secondary"/>
+                                        <field name="status_account" widget="boolean_toggle"
+                                               attrs="{'invisible': [('account_link', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="date_close"/>
+                                        <field name="date_open"/>
+                                        <field name="url_reset_password_valid" invisible="1"/>
+                                    </group>
+                                </group>
+                                <div class="alert alert-success text-center o_form_header"
+                                     attrs="{'invisible': ['|',('url_reset_password_valid', '=', False),('status_account', '=', False)]}"
+                                     role="status">
+                                    <a class="close" data-dismiss="alert" href="#" aria-label="Close">
+                                        x
+                                    </a>
+                                    <div>
+                                        <strong>
+                                            Một email chứa liên kết khôi phục mật khẩu sau đã được gửi:
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        <field name="url_reset_password" widget="url" on_change="1" id="signup_url"/>
+                                    </div>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_employee_profile_tree" model="ir.ui.view">
+            <field name="name">hrm.blocks.tree</field>
+            <field name="model">hrm.employee.profile</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="block_id"/>
+                    <field name="employee_code_new"/>
+                    <field name="system_id"/>
+                    <field name="company"/>
+                    <field name="department_id"/>
+                    <field name="profile_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_profile_action" model="ir.actions.act_window">
+            <field name="name">Tạo mới hồ sơ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.employee.profile</field>
+            <field name="search_view_id" ref="blocks_filter"/>
+            <field name="domain">['|', ('create_uid', '=', uid), ('see_record_with_config', '=', True)]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_employee_profile_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_employee_profile_form')})]"/>
+        </record>
+    </data>
+</odoo>

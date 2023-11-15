@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Sequences for sale.order -->
+        <record id="seq_employee_code_new" model="ir.sequence">
+            <field name="name">Employee Sequence</field>
+            <field name="code">hrm.employee.profile</field>
+            <field name="prefix">BH</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+        </record>
+</odoo>

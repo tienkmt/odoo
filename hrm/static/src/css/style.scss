@@ -1,0 +1,54 @@
+.o_list_view.hrm_custom_tree_notebook {
+    .o_list_table {
+        thead {
+            > tr > th:not(.o_list_record_selector) {
+                text-align: center;
+                &.o_list_number_th {
+                    width: 50px;
+                    text-align: center;
+                }
+            }
+        }
+        tbody > tr > td:not(.o_list_record_selector) {
+            &.o_data_cell.o_field_cell {
+                text-align: center;
+                &.o_list_many2one.o_required_modifier {
+                    // Cho các trường many2one
+                    text-align: left;
+                }
+                &.o_list_char.o_readonly_modifier {
+                    text-align: left;
+                }
+                &.o_list_many2one {
+                    text-align: left;
+                }
+            }
+            > div {
+                &.custom-control.custom-checkbox {
+                    text-align: center;
+                }
+            }
+        }
+        tfoot {
+            .o_list_number {
+                text-align: left;
+            }
+        }
+    }
+}
+// .hrm_custom_form {
+//     .o_required_modifier.o_input, .o_required_modifier .o_input {
+//         background-color: #93d3a1 !important
+//     }
+// }
+
+.o_form_view .o_field_widget.o_field_one2many, .o_form_view .o_field_widget.o_field_many2many{
+    text-align: left;
+}
+
+.btn-red {
+    background-color: red;
+    color: white; /* Để làm cho nút dễ đọc với màu nền đỏ */
+    /* Các quy tắc CSS khác mà bạn muốn áp dụng cho nút này */
+}
+

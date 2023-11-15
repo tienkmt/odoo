@@ -1,0 +1,59 @@
+<odoo>
+    <record id="view_departments_form" model="ir.ui.view">
+        <field name="name">hrm.departments.form</field>
+        <field name="model">hrm.departments</field>
+        <field name="arch" type="xml">
+            <form string="Phòng ban">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="superior_department"/>
+                        <field name="manager_id"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_departments_tree" model="ir.ui.view">
+        <field name="name">hrm.departments.tree</field>
+        <field name="model">hrm.departments</field>
+        <field name="arch" type="xml">
+            <tree string="Phòng ban">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="superior_department"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="departments_filter" model="ir.ui.view">
+        <field name="name">hrm.departments.select</field>
+        <field name="model">hrm.departments</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <field name="superior_department"/>
+                <separator/>
+                <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+            </search>
+        </field>
+    </record>
+
+    <record id="departments_action" model="ir.actions.act_window">
+        <field name="name">Phòng ban</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hrm.departments</field>
+        <field name="search_view_id" ref="departments_filter"/>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_departments_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_departments_form')})]"/>
+    </record>
+</odoo>

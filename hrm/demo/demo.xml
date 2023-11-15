@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+<!--          <record id="hrm_blocks_office" model="hrm.blocks">-->
+<!--            <field name="name">Văn Phòng</field>-->
+<!--            <field name="has_change">False</field>-->
+<!--            <field name="create_new">True</field>-->
+<!--            <field name="active">True</field>-->
+<!--          </record>-->
+<!--          <record id="hrm_blocks_trade" model="hrm.blocks">-->
+<!--            <field name="name">Thương Mại</field>-->
+<!--            <field name="has_change">False</field>-->
+<!--            <field name="create_new">True</field>-->
+<!--            <field name="active">True</field>-->
+<!--          </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="hrm_blocks_office" model="hrm.blocks">
+            <field name="name">Văn phòng</field>
+            <field name="description">Khối văn phòng</field>
+            <field name="active" eval="True"/>
+            <field name="has_change" eval="False"/>
+        </record>
+
+        <record id="hrm_blocks_commerce" model="hrm.blocks">
+            <field name="name">Thương mại</field>
+            <field name="description">Khối thương mại</field>
+            <field name="active" eval="True"/>
+            <field name="has_change" eval="False"/>
+        </record>
+    </data>
+</odoo>

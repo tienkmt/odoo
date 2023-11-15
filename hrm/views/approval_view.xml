@@ -1,0 +1,108 @@
+<odoo>
+    <record id="view_approval_form" model="ir.ui.view">
+        <field name="name">hrm.employee.approval.form</field>
+        <field name="model">hrm.employee.profile</field>
+        <field name="arch" type="xml">
+            <form string="Phê duyệt" create="false" edit="false" delete="false">
+                <field name="can_see_button_approval" invisible="1"/>
+                <header>
+                    <button name="%(hrm.approval_reason_refusal_action)d" string="Từ chối" type="action"
+                            style="background-color: #FD5050;border-radius: 5px;color:#fff;"
+                            attrs="{'invisible': ['|', ('state', 'in', ('draft','approved')), ('can_see_button_approval', '=', False)]}"/>
+                    <button name="action_confirm" string="Phê duyệt" type="object"
+                            style="background-color: #009900; border-radius: 5px;color:#fff;"
+                            attrs="{'invisible': ['|', ('state', 'in', ('draft','approved')), ('can_see_button_approval', '=', False)]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="employee_code_new" readonly="1"/>
+                            <field name="name"/>
+                            <field name="phone_num"/>
+                            <field name="email"/>
+                            <field name="identifier"/>
+                            <field name="work_start_date"/>
+                            <field name="date_receipt"/>
+                            <field name="profile_status"/>
+                            <field name="reason" attrs="{'invisible':[('reason','=',False)]}"/>
+                        </group>
+                        <group>
+                            <!--   related = true là đã chọn văn phòng -->
+                            <field name="related" invisible="1"/>
+                            <field name="block_id"/>
+                            <field name="system_id"
+                                   attrs="{'invisible': [('related', '=', True)], 'required': [('related', '=', False)]}"/>
+                            <field name="company"
+                                   attrs="{'invisible': [('related', '=', True)], 'required': [('related', '=', False)]}"/>
+                            <field name="team_marketing" attrs="{'invisible': [('related', '=', True)]}"/>
+                            <field name="team_sales" attrs="{'invisible': [('related', '=', True)]}"/>
+                            <field name="position_id"/>
+                            <field name="department_id"
+                                   attrs="{'invisible': [('related', '=', False)], 'required': [('related', '=', True)]}"/>
+                            <field name="manager_id" attrs="{'invisible': [('related', '=', False)]}"/>
+                            <field name="rank_id"
+                                   attrs="{'invisible': [('related', '=', False)], 'required': [('related', '=', True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="auto_create_acc"/>
+                    </group>
+                    <notebook attrs="{'invisible': [('approved_name', '=', False)]}">
+                        <page string="Trạng thái phê duyệt">
+                            <field name="approved_name" readonly="1"/>
+                            <field name="approved_link" readonly="1">
+                                <tree default_order="step ASC" class="hrm_custom_tree_notebook">
+                                    <field name="step"/>
+                                    <field name="approve"/>
+                                    <field name="obligatory"/>
+                                    <field name="excess_level"/>
+                                    <field name="approve_status"/>
+                                    <field name="time"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_tree" model="ir.ui.view">
+        <field name="name">approval.tree.view</field>
+        <field name="model">hrm.employee.profile</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="employee_code_new"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone_num"/>
+                <field name="system_id"/>
+                <field name="company"/>
+                <field name="department_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_action" model="ir.actions.act_window">
+        <field name="name">Màn hình phê duyệt</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hrm.employee.profile</field>
+        <field name="domain">[('state', 'in', ['pending', 'approved']), ('can_see_approved_record', '=', True)]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_approval_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_approval_form')})]"/>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Chưa có hồ sơ nào cần phê duyệt.
+              </p>
+        </field>
+    </record>
+</odoo>

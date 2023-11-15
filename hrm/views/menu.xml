@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_field" name="HRM" sequence="-2"/>
+    <menuitem id="config" name="Cấu hình" parent="menu_field" sequence="1" groups="hrm.hrm_group_config_access"/>
+    <menuitem id="block" name="Khối" parent="config" sequence="10" action='blocks_action'
+              groups="hrm.hrm_group_config_access"/>
+    <menuitem id="companies" name="Công ty" parent="config" sequence="30" action="companies_action"
+              groups="hrm.hrm_group_config_access"/>
+    <menuitem id="system" name="Hệ thống" parent="config" sequence="20" action='systems_action'
+              groups="hrm.hrm_group_config_access"/>
+    <menuitem id="team" name="Đội ngũ" parent="config" sequence="40" action="hrm.teams_action"/>
+    <menuitem id="position" name="Vị Trí" parent="config" sequence="60" action="action_hrm_position"
+              groups="hrm.hrm_group_config_access"/>
+    <menuitem id="departments" name="Phòng ban" parent="config" sequence="50" action="departments_action"
+              groups="hrm.hrm_group_config_access"/>
+    <menuitem id="ranks" name="Cấp bậc" parent="config" sequence="90" action="hrm.ranks_action"/>
+    <menuitem id="managers" name="Người quản lý" parent="config" sequence="100" action=""/>
+    <menuitem id="document" name="Tài liệu" parent="config" sequence="110" action="document_action"/>
+    <menuitem id="document_list" name="Danh sách tài liệu" parent="config" sequence="120"
+              action="document_list_action"/>
+    <menuitem id="employee" name="Nhân viên" parent="menu_field" sequence="2"
+              groups="hrm_group_config_access,hrm_group_own_edit,hrm_group_read_only,hrm_group_create_edit"/>
+    <menuitem id="employee_profile" name="Tạo mới" parent="employee" sequence="10" action="employee_profile_action"
+              groups="hrm_group_config_access,hrm_group_own_edit,hrm_group_read_only,hrm_group_create_edit"/>
+    <menuitem id="approval" name="Phê duyệt hồ sơ" parent="employee" sequence="11" action="approval_action"
+              groups="hrm_group_config_access,hrm_group_own_edit,hrm_group_read_only,hrm_group_create_edit"/>
+    <menuitem id="approved_reopening" name="Phê duyệt mở lại" parent="employee" sequence="12" action="approved_reopening_action"
+              groups="hrm_group_config_access,hrm_group_own_edit,hrm_group_read_only,hrm_group_create_edit"/>
+    <menuitem id="document_declaration" name="Khai báo tài liệu" parent="employee" sequence="130"
+              action="document_declaration_action"/>
+    <menuitem id="approve_flow" name="Luồng" parent="menu_field" sequence="3"
+              groups="hrm_group_config_access"/>
+    <menuitem id="create_approve_flow" name="Luồng phê duyệt" parent="approve_flow" sequence="10"
+              action="approval_flow_object_action"/>
+    <menuitem id="create_account_reopen_flow" name="Luồng mở lại tài khoản" parent="approve_flow" sequence="11"
+              action="account_reopen_flow_action"/>
+</odoo>

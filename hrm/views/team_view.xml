@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id="view_teams_form" model="ir.ui.view">
+            <field name="name">hrm.teams.form</field>
+            <field name="model">hrm.teams</field>
+            <field name="arch" type="xml">
+                <form string="Đội ngũ">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="team_name"/>
+                            <field name="type_team"/>
+                            <field name="company"/>
+                            <field name="system_id" readonly="True" force_save="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_teams_tree" model="ir.ui.view">
+            <field name="name">hrm.teams.tree</field>
+            <field name="model">hrm.teams</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="team_name"/>
+                    <field name="type_team"/>
+                    <field name="system_id" force_save="1"/>
+                    <field name="company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="teams_filter" model="ir.ui.view">
+            <field name="name">hrm.teams.filter</field>
+            <field name="model">hrm.teams</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm">
+                    <field name="name"/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="teams_action" model="ir.actions.act_window">
+            <field name="name">Đội ngũ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.teams</field>
+            <field name="search_view_id" ref="teams_filter"/>
+            <field name="domain">[('see_record_with_config', '=', True)]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_teams_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_teams_form')})]"/>
+        </record>
+    </data>
+</odoo>

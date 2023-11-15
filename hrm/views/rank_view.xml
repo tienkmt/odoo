@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record id="view_ranks_form" model="ir.ui.view">
+            <field name="name">hrm.ranks.form</field>
+            <field name="model">hrm.ranks</field>
+            <field name="arch" type="xml">
+                <form string="Cấp bậc">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="abbreviations"/>
+                            <field name="department_id"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ranks_tree" model="ir.ui.view">
+            <field name="name">hrm.ranks.tree</field>
+            <field name="model">hrm.ranks</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="abbreviations"/>
+                    <field name="department_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ranks_filter" model="ir.ui.view">
+            <field name="name">hrm.ranks.filter</field>
+            <field name="model">hrm.ranks</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm">
+                    <field name="name"/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="ranks_action" model="ir.actions.act_window">
+            <field name="name">Cấp bậc</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.ranks</field>
+            <field name="search_view_id" ref="ranks_filter"/>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_ranks_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_ranks_form')})]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="approval_reason_refusal_view_form" model="ir.ui.view">
+            <field name="name">approval.reason.refusal.form</field>
+            <field name="model">approval.reason.refusal</field>
+            <field name="arch" type="xml">
+                <form string="Lý do từ chối">
+                    <group class="oe_title">
+                        <field name="reason_refusal"/>
+                    </group>
+                    <footer>
+                        <button name="action_approval_reason_refusal" string="Gửi" type="object" class="btn-primary"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="approval_reason_refusal_action" model="ir.actions.act_window">
+            <field name="name">Lý do từ chối</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approval.reason.refusal</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="approval_reason_refusal_view_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_lock_personnel_account_popup" model="ir.ui.view">
+        <field name="name">Lock Personnel Account Popup</field>
+        <field name="model">lock.account</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <h6>Khi khóa tài khoản nhân sự sẽ không đăng nhập được đến khi được mở lại tài khoản.</h6>
+                </group>
+                <footer>
+                    <button string="Đồng ý" name="action_lock_personnel_account" type="object" class="btn-primary"/>
+                    <button string="Hủy" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_lock_personnel_account_popup" model="ir.actions.act_window">
+        <field name="name">Xác nhận khóa tài khoản nhân sự</field>
+        <field name="res_model">lock.account</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_lock_personnel_account_popup"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

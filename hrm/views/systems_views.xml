@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_systems_form" model="ir.ui.view">
+            <field name="name">hrm.systems.form</field>
+            <field name="model">hrm.systems</field>
+            <field name="arch" type="xml">
+                <form string="Hệ thống">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="name_system"/>
+                                <field name="parent_system"/>
+                                <field name="type_system"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="phone_number"/>
+                                <field name="chairperson"/>
+                                <field name="vice_president"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_systems_tree" model="ir.ui.view">
+            <field name="name">hrm.systems.tree</field>
+            <field name="model">hrm.systems</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="name_system"/>
+                    <field name="parent_system"/>
+                    <field name="type_system"/>
+                    <field name="phone_number"/>
+                    <field name="chairperson"/>
+                    <field name="vice_president"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hrm_system_search" model="ir.ui.view">
+            <field name="name">hrm.system.search</field>
+            <field name="model">hrm.systems</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm">
+                    <field name="name"/>
+                    <field name="name_system"/>
+                    <field name="parent_system"/>
+                    <field name="type_system"/>
+                    <field name="phone_number"/>
+                    <field name="chairperson"/>
+                    <field name="vice_president"/>
+                    <separator/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="systems_action" model="ir.actions.act_window">
+            <field name="name">Hệ thống</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.systems</field>
+            <field name="search_view_id" ref="view_hrm_system_search"/>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_systems_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_systems_form')})]"/>
+        </record>
+    </data>
+</odoo>

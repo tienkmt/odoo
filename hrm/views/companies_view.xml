@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="name">hrm.companies.form</field>
+            <field name="model">hrm.companies</field>
+            <field name="arch" type="xml">
+                <form string="Công ty">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="name_company"/>
+                                <field name="parent_company"/>
+                                <field name="type_company"/>
+                                <field name="check_company" invisible="1"/>
+                                <field name="system_id"/>
+                            </group>
+                            <group>
+                                <field name="phone_num"/>
+                                <field name="chairperson"/>
+                                <field name="vice_president"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_company_tree" model="ir.ui.view">
+            <field name="name">hrm.companies.tree</field>
+            <field name="model">hrm.companies</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="name_company"/>
+                    <field name="parent_company"/>
+                    <field name="type_company"/>
+                    <field name="system_id"/>
+                    <field name="phone_num"/>
+                    <field name="chairperson"/>
+                    <field name="vice_president"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="companies_filter" model="ir.ui.view">
+            <field name="name">hrm.companies.select</field>
+            <field name="model">hrm.companies</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm">
+                    <field name="name"/>
+                    <field name="name_company"/>
+                    <field name="parent_company"/>
+                    <field name="type_company"/>
+                    <field name="system_id"/>
+                    <field name="phone_num"/>
+                    <field name="chairperson"/>
+                    <field name="vice_president"/>
+                    <separator/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="companies_action" model="ir.actions.act_window">
+            <field name="name">Công ty</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.companies</field>
+            <field name="search_view_id" ref="companies_filter"/>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_company_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_company_form')})]"/>
+        </record>
+    </data>
+</odoo>

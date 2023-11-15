@@ -1,0 +1,76 @@
+<odoo>
+    <record id="view_approval_flow_object_form" model="ir.ui.view">
+        <field name="name">hrm.approval.flow.object.form</field>
+        <field name="model">hrm.approval.flow.object</field>
+        <field name="arch" type="xml">
+            <form string="Luồng phê duyệt">
+                <sheet>
+                    <group>
+                        <field name="related" invisible="1"/>
+                        <field name="name"/>
+                        <field name="block_id" attrs="{'readonly': [('check_blocks', '!=', 'full')]}"/>
+                        <field name="check_blocks" invisible="1"/>
+                        <field name="check_company" invisible="1"/>
+                        <field name="department_id" attrs="{'invisible': [('related', '!=', True)]}"
+                               widget="many2many_tags"
+                        />
+                        <field name="system_id"
+                               options="{'limit': 10, 'create': false, 'create_edit': false}"
+                               attrs="{'invisible': [('related', '=', True)]}"
+                               widget="many2many_tags"
+                               store="1"
+                        />
+                        <field name="company" attrs="{'invisible': [('related', '=', True)]}" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="Chi tiết luồng" name="approval_flow_link">
+                            <field name="approval_flow_link">
+                                <tree editable="bottom" default_order="step ASC" class="hrm_custom_tree_notebook">
+                                    <field name="step"/>
+                                    <field name="approve"/>
+                                    <field name="obligatory"/>
+                                    <field name="excess_level"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_flow_object_tree" model="ir.ui.view">
+        <field name="name">hrm.approval.flow.object.tree</field>
+        <field name="model">hrm.approval.flow.object</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="block_id"/>
+                <field name="department_id" widget="many2many_tags"/>
+                <field name="system_id" widget="many2many_tags"/>
+                <field name="company" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="approval_flow_object_action" model="ir.actions.act_window">
+        <field name="name">Luồng phê duyệt</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hrm.approval.flow.object</field>
+        <field name="search_view_id" ref="blocks_filter"/>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_approval_flow_object_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_approval_flow_object_form')})]"/>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Chưa có luồng phê duyệt.
+              </p>
+        </field>
+    </record>
+</odoo>

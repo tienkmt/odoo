@@ -1,0 +1,59 @@
+<odoo>
+    <record id="view_hrm_users_form" model="ir.ui.view">
+        <field name="name">res.user.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <div class="oe_title">
+                    <label for="user_name_display" class="oe_edit_only"/>
+                    <h1><field name="user_name_display" readonly="1"/></h1>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <group>
+                    <group>
+                        <field name="user_code"/>
+                        <field name="login"/>
+                        <field name="name" required="1"/>
+                        <field name="user_phone_num"/>
+                    </group>
+                    <group>
+                        <field name="user_related" invisible="1"/>
+                        <field name="require_team" invisible="1"/>
+                        <field name="user_block_id"/>
+                        <field name="user_department_id" attrs="{'invisible': [('user_related', '=', False)], 'required': [('user_related', '=', True)]}"/>
+                        <field name="user_system_id" attrs="{'invisible': [('user_related', '=', True)], 'required': [('user_related', '=', False)]}"/>
+                        <field name="user_company_id" attrs="{'invisible': [('user_related', '=', True)], 'required': [('user_related', '=', False)]}"/>
+                        <field name="user_position_id" required="1"/>
+                        <field name="user_team_marketing" attrs="{'invisible': ['|', ('user_related', '=', True), ('require_team', '=', False)]
+                                                                    , 'required': ['|', ('user_related', '=', True), ('require_team', '=', True)]}"/>
+                        <field name="user_team_sales" attrs="{'invisible': ['|', ('user_related', '=', True), ('require_team', '=', True)]
+                                                                    , 'required': ['|', ('user_related', '=', True), ('require_team', '=', False)]}"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='access_rights']" position="replace">
+                <page name="access_rights" string="Access Rights">
+                    <group string="Multi Companies" attrs="{'invisible': [('companies_count', '&lt;=', 1)]}">
+                        <field string="Allowed Companies" name="company_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                        <field string="Default Company" name="company_id" context="{'user_preference': 0}"/>
+                        <field string="Companies count" name="companies_count" invisible="1"/>
+                    </group>
+                    <group string="Quyền HRMS">
+                        <field name="related" invisible="1"/>
+                        <field name="block_id"/>
+                        <field name="department_id" widget="many2many_tags"
+                               attrs="{'invisible': ['|', ('related', '!=', True), ('block_id', '=', 'full')]}"/>
+                        <field name="system_id" widget="many2many_tags"
+                               attrs="{'invisible': ['|', ('related', '=', True), ('block_id', '=', 'full')]}"/>
+                        <field name="company" widget="many2many_tags"
+                               attrs="{'invisible': ['|', ('related', '=', True), ('block_id', '=', 'full')]}"/>
+                    </group>
+                    <field name="groups_id"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

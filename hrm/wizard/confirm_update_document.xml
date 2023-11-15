@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="hrm_confirm_update_document_form" model="ir.ui.view">
+            <field name="name">hrm.confirm.update.document</field>
+            <field name="model">hrm.confirm_update_document</field>
+            <field name="arch" type="xml">
+                <form string="Áp dụng tài liệu">
+                    <group class="oe_title">
+                        <field name="update_confirm_document"/>
+                        <field name="number_applicable_records"/>
+                    </group>
+                    <footer>
+                        <button name="action_confirm_update_document" string="Gửi" type="object" class="btn-primary"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hrm_confirm_update_document" model="ir.actions.act_window">
+            <field name="name">Chọn đối tượng áp dụng tài liệu</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.confirm_update_document</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hrm_confirm_update_document_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

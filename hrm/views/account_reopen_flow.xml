@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <record id="view_account_reopen_flow_form" model="ir.ui.view">
+            <field name="name">hrm.account.reopen.flow.form</field>
+            <field name="model">hrm.account.reopen.flow</field>
+            <field name="arch" type="xml">
+                <form string="Luồng mở lại tài khoản">
+                    <sheet>
+                        <group>
+                            <field name="related" invisible="1"/>
+                            <field name="name"/>
+                            <field name="block_id" attrs="{'readonly': [('check_blocks', '!=', 'full')]}"/>
+                            <field name="check_blocks" invisible="1"/>
+                            <field name="check_company" invisible="1"/>
+                            <field name="department_id" attrs="{'invisible': [('related', '!=', True)]}"
+                                   widget="many2many_tags"/>
+                            <field name="system_id"
+                                   option="{'limit': 10, 'create': false, 'create_edit': false}"
+                                   attrs="{'invisible': [('related', '=', True)]}"
+                                   widget="many2many_tags"
+                                   store="1"
+                            />
+                            <field name="company" attrs="{'invisible': [('related', '=', True)]}"
+                                   widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string="Chi tiết luồng" name="account_reopen_link">
+                                <field name="account_reopen_link">
+                                    <tree editable="bottom" default_order="step ASC" class="hrm_custom_tree_notebook">
+                                        <field name="step"/>
+                                        <field name="approval_person"/>
+                                        <field name="imperative"/>
+                                        <field name="pass_level"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_reopen_flow_tree" model="ir.ui.view">
+            <field name="name">hrm.account.reopen.flow.tree</field>
+            <field name="model">hrm.account.reopen.flow</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="block_id"/>
+                    <field name="department_id" widget="many2many_tags"/>
+                    <field name="system_id" widget="many2many_tags"/>
+                    <field name="company" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_reopen_flow_action" model="ir.actions.act_window">
+            <field name="name">Luồng mở lại tài khoản</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hrm.account.reopen.flow</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_account_reopen_flow_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_reopen_flow_form')})]"/>
+        </record>
+
+    </data>
+</odoo>

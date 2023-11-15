@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="reason_reopening_account_view_form" model="ir.ui.view">
+            <field name="name">reason_reopening_account_view_form</field>
+            <field name="model">reason.reopening.account</field>
+            <field name="arch" type="xml">
+                <form string="Lý do mở lại">
+                    <group class="oe_title">
+                        <field name="reason_reopening"/>
+                    </group>
+                    <footer>
+                        <button name="action_reason_reopening" string="Gửi" type="object" class="btn-primary"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="reason_reopening_account_action" model="ir.actions.act_window">
+            <field name="name">Lý do mở lại tài khoản</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reason.reopening.account</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="reason_reopening_account_view_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

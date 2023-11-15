@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+        <record id="views_hrm_position_form" model="ir.ui.view">
+            <field name="name">views_hrm_position.form</field>
+            <field name="model">hrm.position</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet style="max-width: 440px;">
+                        <group>
+                            <field name="related" invisible="1"/>
+                            <field name="check_blocks" invisible="1"/>
+                            <field name="work_position"/>
+                            <field name="block" attrs="{'readonly': [('check_blocks', '!=', 'full')]}"/>
+                            <field name="department" attrs="{'invisible': [('related', '=', True)]}"/>
+                            <field name="team_type" attrs="{'invisible': [('related', '!=', True)]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="views_hrm_position_tree" model="ir.ui.view">
+            <field name="name">views_hrm_position_tree</field>
+            <field name="model">hrm.position</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="work_position"/>
+                    <field name="block"/>
+                    <field name="department"/>
+                    <field name="team_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="position_filter" model="ir.ui.view">
+            <field name="name">hrm.position.filter</field>
+            <field name="model">hrm.position</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm">
+                    <field name="work_position"/>
+                    <field name="block"/>
+                    <field name="department"/>
+                    <separator/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group expand="1" name="group_by" string="Nhóm bởi">
+                        <filter name="block" string="Khối" context="{'group_by': 'block'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hrm_position" model="ir.actions.act_window">
+            <field name="name">Vị trí</field>
+            <field name="res_model">hrm.position</field>
+            <field name="search_view_id" ref="position_filter"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
